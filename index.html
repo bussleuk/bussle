@@ -1,0 +1,598 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Bussle unlocks the UK's idle minibuses so schools, faith groups, charities and community organisations can cut costs and cut carbon. A three-sided sharing marketplace based in Bristol.">
+<title>Bussle — Unlock the UK's idle minibuses. Cut costs. Cut carbon.</title>
+
+<style>
+  /* ---------- Palette (6 named values) ----------
+     pine   #0E3B2E  deep pine green — the ground for boldness (hero)
+     pine2  #0A2A21  darker pine — depth / footer
+     moss   #2E7D5B  mid green — route lines, links, secondary accents
+     amber  #E4A11B  warm indicator/route highlight (the one accent)
+     sand   #F4F0E6  warm neutral — page background
+     ink    #16211C  slate-green ink — body text
+  */
+  :root{
+    --pine:#0E3B2E;
+    --pine2:#0A2A21;
+    --moss:#2E7D5B;
+    --moss-line:#3E9C72;
+    --amber:#E4A11B;
+    --amber-deep:#B87908;
+    --sand:#F4F0E6;
+    --paper:#FBFAF4;
+    --ink:#16211C;
+    --ink-soft:#41514A;
+    --border:#DED8C7;
+    --border-dark:rgba(255,255,255,.14);
+
+    /* type scale */
+    --step--1:.8125rem;
+    --step-0:1rem;
+    --step-1:1.1875rem;
+    --step-2:1.5rem;
+    --step-3:clamp(1.75rem,1.3rem + 2.2vw,2.75rem);
+    --step-4:clamp(2.4rem,1.4rem + 4.6vw,4.75rem);
+
+    /* Deliberate system-font stacks (no webfont downloads).
+       Display: geometric-humanist, the family of transit wayfinding signage. */
+    --font-display:"Avenir Next","Avenir","Segoe UI","Helvetica Neue",system-ui,sans-serif;
+    --font-body:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+
+    --wrap:72rem;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(16,33,26,.06),0 12px 32px -12px rgba(16,33,26,.18);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    font-size:var(--step-0);
+    line-height:1.6;
+    color:var(--ink);
+    background:var(--sand);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3{font-family:var(--font-display);line-height:1.08;letter-spacing:-.015em;margin:0;font-weight:700}
+  h2{font-size:var(--step-3)}
+  h3{font-size:var(--step-1);letter-spacing:-.01em}
+  p{margin:0}
+  a{color:inherit}
+
+  .wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(1.15rem,4vw,2.5rem)}
+  section{padding-block:clamp(3.5rem,8vw,6.5rem)}
+
+  /* focus visibility */
+  a:focus-visible,button:focus-visible{
+    outline:3px solid var(--amber);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  .skip{
+    position:absolute;left:1rem;top:-3.5rem;z-index:100;
+    background:var(--amber);color:var(--pine2);font-weight:700;
+    padding:.6rem 1rem;border-radius:8px;transition:top .18s ease;
+  }
+  .skip:focus{top:1rem}
+
+  /* ---------- eyebrow / labels ---------- */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-family:var(--font-body);font-size:var(--step--1);
+    font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--moss);margin-bottom:1.1rem;
+  }
+  .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--amber);flex:none}
+  .section-dark .eyebrow{color:var(--amber)}
+  .lead{font-size:var(--step-1);color:var(--ink-soft);max-width:60ch}
+  .section-dark .lead{color:rgba(244,240,230,.82)}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(14,59,46,.94);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border-dark);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.85rem}
+  .brand{display:inline-flex;align-items:center;gap:.6rem;color:var(--sand);font-family:var(--font-display);font-weight:700;font-size:1.3rem;letter-spacing:-.02em;text-decoration:none}
+  .brand svg{flex:none}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-family:var(--font-display);font-weight:700;font-size:var(--step-0);
+    text-decoration:none;cursor:pointer;border:0;
+    padding:.85rem 1.4rem;border-radius:10px;
+    transition:transform .18s ease,background .18s ease,box-shadow .18s ease;
+    line-height:1;
+  }
+  .btn-primary{background:var(--amber);color:var(--pine2)}
+  .btn-primary:hover{background:#F2B02E;transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(228,161,27,.7)}
+  .btn-sm{padding:.6rem 1rem}
+  .btn-ghost{background:transparent;color:var(--sand);border:1.5px solid rgba(244,240,230,.5)}
+  .btn-ghost:hover{background:rgba(244,240,230,.12);transform:translateY(-2px)}
+  .btn .arrow{transition:transform .18s ease}
+  .btn:hover .arrow{transform:translateX(3px)}
+  @media (prefers-reduced-motion:reduce){
+    .btn,.btn:hover,.btn .arrow,.btn:hover .arrow{transform:none;transition:background .18s ease}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:var(--pine);color:var(--sand);
+    padding-block:clamp(4rem,10vw,7.5rem);
+  }
+  .hero-map{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .hero-inner{position:relative;max-width:44rem}
+  .hero h1{
+    font-size:var(--step-4);letter-spacing:-.03em;margin:.4rem 0 0;
+    text-wrap:balance;
+  }
+  .hero .accent{color:var(--amber)}
+  .hero-sub{font-size:var(--step-1);color:rgba(244,240,230,.85);margin-top:1.4rem;max-width:38ch}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.2rem}
+  .hero-tags{display:flex;flex-wrap:wrap;gap:.5rem .5rem;margin-top:2.6rem}
+  .tag{
+    font-size:var(--step--1);font-weight:600;
+    padding:.4rem .8rem;border-radius:999px;
+    border:1px solid rgba(244,240,230,.28);color:rgba(244,240,230,.9);
+    display:inline-flex;align-items:center;gap:.45rem;
+  }
+  .tag .node{width:7px;height:7px;border-radius:50%;background:var(--amber);flex:none}
+
+  /* ---------- generic dark section ---------- */
+  .section-dark{background:var(--pine);color:var(--sand)}
+  .section-pine2{background:var(--pine2);color:var(--sand)}
+
+  /* ---------- problem ---------- */
+  .grid{display:grid;gap:1.15rem}
+  .cols-2{grid-template-columns:1fr}
+  .cols-3{grid-template-columns:1fr}
+  @media(min-width:640px){.cols-3{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:900px){.cols-2{grid-template-columns:1fr 1fr}.cols-3{grid-template-columns:repeat(3,1fr)}}
+
+  .card{
+    background:var(--paper);border:1px solid var(--border);
+    border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow);
+    height:100%;
+  }
+  .card h3{margin-bottom:.5rem}
+  .card p{color:var(--ink-soft);font-size:var(--step-0)}
+  .card .figure{font-family:var(--font-display);font-weight:700;font-size:var(--step-2);color:var(--pine);letter-spacing:-.02em;font-variant-numeric:tabular-nums;display:block;margin-bottom:.3rem}
+  .icon-badge{
+    width:44px;height:44px;border-radius:11px;display:grid;place-items:center;
+    background:rgba(46,125,91,.12);color:var(--pine);margin-bottom:1rem;
+  }
+
+  /* ---------- solution: transit map ---------- */
+  .route{margin-top:2.5rem}
+  .route-svg{width:100%;height:auto;display:block}
+  .nodes{display:grid;gap:1.15rem;margin-top:1.6rem}
+  @media(min-width:820px){.nodes{grid-template-columns:repeat(3,1fr)}}
+  .node-card{
+    background:rgba(244,240,230,.06);border:1px solid var(--border-dark);
+    border-radius:var(--radius);padding:1.5rem;position:relative;
+  }
+  .node-card .stop{
+    display:inline-flex;align-items:center;gap:.6rem;
+    font-family:var(--font-display);font-weight:700;color:var(--amber);
+    font-size:var(--step--1);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.7rem;
+  }
+  .node-card .stop .ring{width:16px;height:16px;border-radius:50%;border:3px solid var(--amber);flex:none}
+  .node-card h3{color:var(--sand);margin-bottom:.4rem}
+  .node-card p{color:rgba(244,240,230,.78);font-size:var(--step-0)}
+  .handled{
+    margin-top:1.9rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;
+    color:rgba(244,240,230,.85);font-size:var(--step-0);
+  }
+  .handled .pill{background:rgba(228,161,27,.16);color:var(--amber);border:1px solid rgba(228,161,27,.35);padding:.35rem .8rem;border-radius:999px;font-weight:600;font-size:var(--step--1)}
+
+  /* ---------- stat tiles ---------- */
+  .stats{display:grid;gap:1.1rem;grid-template-columns:repeat(2,1fr)}
+  @media(min-width:820px){.stats{grid-template-columns:repeat(4,1fr)}}
+  .stat{
+    background:var(--paper);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.5rem 1.3rem;box-shadow:var(--shadow);
+    border-top:4px solid var(--amber);
+  }
+  .stat .num{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(2rem,1.4rem + 2.6vw,2.9rem);color:var(--pine);
+    letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1;
+    display:block;
+  }
+  .stat .label{color:var(--ink-soft);font-size:var(--step--1);margin-top:.6rem;display:block;line-height:1.45}
+  .proof-note{margin-top:2rem;color:var(--ink-soft);font-size:var(--step-0);max-width:62ch}
+  .proof-note strong{color:var(--pine)}
+
+  /* ---------- why now ---------- */
+  .reasons{display:grid;gap:0;margin-top:2rem}
+  .reason{
+    display:grid;grid-template-columns:auto 1fr;gap:1.1rem;
+    padding:1.3rem 0;border-top:1px solid var(--border-dark);align-items:start;
+  }
+  .reason:last-child{border-bottom:1px solid var(--border-dark)}
+  .reason .rnum{
+    font-family:var(--font-display);font-weight:700;color:var(--amber);
+    font-variant-numeric:tabular-nums;font-size:var(--step-1);
+    width:2.4rem;flex:none;
+  }
+  .reason h3{color:var(--sand);font-size:var(--step-1);margin-bottom:.25rem}
+  .reason p{color:rgba(244,240,230,.78)}
+
+  /* ---------- impact ---------- */
+  .impact-hero{
+    background:var(--pine);color:var(--sand);border-radius:var(--radius);
+    padding:clamp(1.8rem,4vw,2.8rem);margin-bottom:1.15rem;
+    display:grid;gap:1.4rem;align-items:center;
+  }
+  @media(min-width:820px){.impact-hero{grid-template-columns:auto 1fr}}
+  .impact-hero .big{
+    font-family:var(--font-display);font-weight:700;letter-spacing:-.03em;
+    font-size:clamp(2.8rem,2rem + 4vw,4.5rem);line-height:1;color:var(--amber);
+    font-variant-numeric:tabular-nums;
+  }
+  .impact-hero .big span{display:block;font-size:var(--step-0);color:rgba(244,240,230,.8);letter-spacing:.04em;font-weight:600;margin-top:.5rem}
+  .goal{display:flex;gap:1rem;align-items:baseline}
+  .goal .g-num{font-family:var(--font-display);font-weight:700;font-size:var(--step-2);color:var(--pine);font-variant-numeric:tabular-nums}
+  .metrics{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+  .metrics .m{background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:.45rem .9rem;font-size:var(--step--1);font-weight:600;color:var(--pine);display:inline-flex;align-items:center;gap:.5rem}
+  .metrics .m .node{width:7px;height:7px;border-radius:50%;background:var(--amber)}
+
+  /* ---------- team ---------- */
+  .team-grid{display:grid;gap:1.15rem;grid-template-columns:1fr}
+  @media(min-width:720px){.team-grid{grid-template-columns:repeat(3,1fr)}}
+  .member{background:var(--paper);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow)}
+  .avatar{
+    width:56px;height:56px;border-radius:14px;display:grid;place-items:center;
+    background:var(--pine);color:var(--amber);font-family:var(--font-display);
+    font-weight:700;font-size:1.35rem;margin-bottom:1.1rem;letter-spacing:.02em;
+  }
+  .member h3{margin-bottom:.15rem}
+  .member .role{color:var(--moss);font-weight:600;font-size:var(--step--1);margin-bottom:.7rem;display:block}
+  .member p{color:var(--ink-soft);font-size:var(--step-0)}
+  .member .awards{margin-top:.9rem;font-size:var(--step--1);color:var(--pine);font-weight:600}
+
+  /* ---------- footer CTA ---------- */
+  .cta{position:relative;overflow:hidden;background:var(--pine2);color:var(--sand);text-align:center;padding-block:clamp(4rem,9vw,6.5rem)}
+  .cta-map{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.5}
+  .cta h2{position:relative;font-size:var(--step-3);max-width:20ch;margin-inline:auto;text-wrap:balance}
+  .cta p{position:relative;color:rgba(244,240,230,.82);margin-top:1rem;max-width:52ch;margin-inline:auto}
+  .cta .email{
+    position:relative;display:inline-block;margin-top:1.8rem;
+    font-family:var(--font-display);font-weight:700;font-size:var(--step-2);
+    color:var(--amber);text-decoration:none;letter-spacing:-.01em;
+    border-bottom:2px solid transparent;transition:border-color .18s ease;
+  }
+  .cta .email:hover{border-color:var(--amber)}
+  .cta-actions{position:relative;margin-top:2rem}
+  .foot{position:relative;margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--border-dark);display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;justify-content:center;align-items:center;color:rgba(244,240,230,.7);font-size:var(--step--1)}
+  .foot .brand-sm{color:var(--sand);font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
+
+  /* ---------- scroll reveal ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+</style>
+
+<a class="skip" href="#main">Skip to main content</a>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Bussle home">
+      <!-- route-node mark -->
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true" fill="none">
+        <path d="M5 22 L15 22 Q22 22 22 15 L22 8" stroke="#E4A11B" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="5" cy="22" r="4" fill="#F4F0E6"/>
+        <circle cx="22" cy="8" r="4" fill="none" stroke="#F4F0E6" stroke-width="2.5"/>
+      </svg>
+      Bussle
+    </a>
+    <a class="btn btn-primary btn-sm" href="mailto:manu@nyce.org.uk">Get in touch</a>
+  </div>
+</header>
+
+<main id="main">
+  <span id="top"></span>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <!-- transit-map motif: routes converging, stop nodes -->
+    <svg class="hero-map" viewBox="0 0 1200 600" preserveAspectRatio="xMaxYMid slice" aria-hidden="true" fill="none">
+      <g stroke="#2E7D5B" stroke-width="3" opacity="0.55" stroke-linecap="round">
+        <path d="M-40 120 H620 Q700 120 700 200 V520"/>
+        <path d="M-40 300 H840 Q920 300 920 380 V640"/>
+        <path d="M1240 90 H980 Q900 90 900 170 V300 Q900 380 820 380 H-40"/>
+      </g>
+      <g stroke="#E4A11B" stroke-width="3" opacity="0.9" stroke-linecap="round" stroke-dasharray="2 14">
+        <path d="M700 200 L920 380"/>
+        <path d="M920 380 L900 170"/>
+        <path d="M700 200 L900 170"/>
+      </g>
+      <g>
+        <circle cx="700" cy="200" r="12" fill="#0E3B2E" stroke="#E4A11B" stroke-width="4"/>
+        <circle cx="920" cy="380" r="12" fill="#0E3B2E" stroke="#E4A11B" stroke-width="4"/>
+        <circle cx="900" cy="170" r="12" fill="#0E3B2E" stroke="#E4A11B" stroke-width="4"/>
+        <circle cx="620" cy="120" r="7" fill="#3E9C72"/>
+        <circle cx="840" cy="300" r="7" fill="#3E9C72"/>
+      </g>
+    </svg>
+
+    <div class="wrap hero-inner">
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span>Impact theme · A Sustainable Planet</span>
+      <h1 id="hero-title">Unlock the UK's idle minibuses. <span class="accent">Cut costs. Cut carbon.</span></h1>
+      <p class="hero-sub">Bussle is a three-sided marketplace that turns thousands of parked minibuses into affordable, low-carbon transport for schools, faith groups, charities and community organisations.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="mailto:manu@nyce.org.uk">Get in touch <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-ghost" href="#solution">See how it works</a>
+      </div>
+      <div class="hero-tags">
+        <span class="tag"><span class="node" aria-hidden="true"></span>Idle minibuses</span>
+        <span class="tag"><span class="node" aria-hidden="true"></span>Community groups</span>
+        <span class="tag"><span class="node" aria-hidden="true"></span>Licensed drivers</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section id="problem" aria-labelledby="problem-title">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>The problem</span>
+      <h2 id="problem-title" class="reveal">Transport is expensive, and the fleet already exists — parked.</h2>
+      <p class="lead reveal" style="margin-top:1rem">Community groups pay a premium to move people, while capable minibuses sit unused a few streets away — still insured, still costing money.</p>
+
+      <div class="grid cols-3" style="margin-top:2.5rem">
+        <div class="card reveal">
+          <span class="figure">£1,500</span>
+          <p>A single day trip for 15 students can cost up to this much — putting educational and community outings out of reach.</p>
+        </div>
+        <div class="card reveal">
+          <span class="figure">~1,000</span>
+          <p>Underused minibuses in Bristol alone, with tens of thousands more sitting idle across the UK.</p>
+        </div>
+        <div class="card reveal">
+          <span class="figure">12 months</span>
+          <p>Some minibuses go a full year without a trip — while insurance and maintenance costs run the whole time.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="margin-top:1.15rem">
+        <h3>The alternatives don't fit</h3>
+        <p>Ride-hailing caps out at eight seats, public transport rarely matches the route or the timetable, and coach hire is expensive and inflexible. Groups are left choosing between high cost and no trip at all.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOLUTION ============ -->
+  <section id="solution" class="section-dark" aria-labelledby="solution-title">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>The solution</span>
+      <h2 id="solution-title" class="reveal">One route line connecting three sides of a marketplace.</h2>
+      <p class="lead reveal" style="margin-top:1rem">Bussle matches spare capacity with real demand — and handles the parts that usually stop sharing from happening.</p>
+
+      <div class="route reveal" role="img" aria-label="A transit route line connecting three stops: organisations with idle minibuses, groups needing transport, and licensed drivers.">
+        <svg class="route-svg" viewBox="0 0 1000 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true" fill="none">
+          <path d="M60 60 H940" stroke="#3E9C72" stroke-width="5" stroke-linecap="round"/>
+          <path d="M60 60 H940" stroke="#E4A11B" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 20"/>
+          <g>
+            <circle cx="120" cy="60" r="18" fill="#0E3B2E" stroke="#E4A11B" stroke-width="6"/>
+            <circle cx="500" cy="60" r="18" fill="#0E3B2E" stroke="#E4A11B" stroke-width="6"/>
+            <circle cx="880" cy="60" r="18" fill="#0E3B2E" stroke="#E4A11B" stroke-width="6"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="nodes">
+        <div class="node-card reveal">
+          <span class="stop"><span class="ring" aria-hidden="true"></span>Stop 01</span>
+          <h3>Organisations with idle minibuses</h3>
+          <p>Schools, faith groups and charities that own vehicles put their spare capacity to work — turning a standing cost into value for the community.</p>
+        </div>
+        <div class="node-card reveal">
+          <span class="stop"><span class="ring" aria-hidden="true"></span>Stop 02</span>
+          <h3>Groups needing affordable transport</h3>
+          <p>Community organisations book shared, right-sized minibus journeys at significantly reduced rates for schools, charities and community groups.</p>
+        </div>
+        <div class="node-card reveal">
+          <span class="stop"><span class="ring" aria-hidden="true"></span>Stop 03</span>
+          <h3>Licensed drivers</h3>
+          <p>Vetted drivers — paid or voluntary — get matched to journeys that fit, keeping vehicles moving safely and reliably.</p>
+        </div>
+      </div>
+
+      <div class="handled reveal">
+        <span>Bussle takes care of the hard parts:</span>
+        <span class="pill">Insurance</span>
+        <span class="pill">Onboarding</span>
+        <span class="pill">Logistics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROOF ============ -->
+  <section id="proof" aria-labelledby="proof-title">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>Proof &amp; traction</span>
+      <h2 id="proof-title" class="reveal">A live pilot, already moving people.</h2>
+      <p class="lead reveal" style="margin-top:1rem">Using a lightweight system, we connected real organisations and ran real journeys — with demand validated well beyond the pilot.</p>
+
+      <div class="stats reveal" style="margin-top:2.5rem">
+        <div class="stat"><span class="num">1&nbsp;·&nbsp;2&nbsp;·&nbsp;3</span><span class="label">1 school, 2 community groups and 3 minibus providers connected in the pilot</span></div>
+        <div class="stat"><span class="num">40%</span><span class="label">Cut in provider transport costs — up to 40% lower</span></div>
+        <div class="stat"><span class="num">1,000+</span><span class="label">Individual car journeys avoided for the school</span></div>
+        <div class="stat"><span class="num">100+</span><span class="label">Stakeholders citing cost, admin and coordination barriers</span></div>
+      </div>
+
+      <div class="grid cols-3 reveal" style="margin-top:1.15rem">
+        <div class="card">
+          <span class="figure">13</span>
+          <p>School leaders interviewed — 8 of them already operating their own minibuses.</p>
+        </div>
+        <div class="card">
+          <span class="figure">3</span>
+          <p>Churches engaged and interested in sharing or booking transport.</p>
+        </div>
+        <div class="card">
+          <span class="figure">Validated</span>
+          <p>Consistent demand signal across schools, faith and community groups nationwide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY NOW ============ -->
+  <section id="why-now" class="section-pine2" aria-labelledby="why-title">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>Why now</span>
+      <h2 id="why-title" class="reveal">The incentives and the tools have finally lined up.</h2>
+
+      <div class="reasons">
+        <div class="reason reveal">
+          <span class="rnum" aria-hidden="true">01</span>
+          <div>
+            <h3>Budgets are under pressure</h3>
+            <p>The cost-of-living squeeze is hitting schools, charities, and faith and community groups hard — every trip has to justify itself.</p>
+          </div>
+        </div>
+        <div class="reason reveal">
+          <span class="rnum" aria-hidden="true">02</span>
+          <div>
+            <h3>Owning a minibus costs more than ever</h3>
+            <p>Rising insurance and maintenance costs give owners a real incentive to share vehicles rather than let them sit.</p>
+          </div>
+        </div>
+        <div class="reason reveal">
+          <span class="rnum" aria-hidden="true">03</span>
+          <div>
+            <h3>Communities are embracing sharing</h3>
+            <p>Collaborative, community-led solutions are increasingly the default — not the exception.</p>
+          </div>
+        </div>
+        <div class="reason reveal">
+          <span class="rnum" aria-hidden="true">04</span>
+          <div>
+            <h3>Trusted platforms are now easy to build</h3>
+            <p>The technology to run a safe, trusted sharing marketplace is mature and accessible — and the right team is ready to build it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IMPACT ============ -->
+  <section id="impact" aria-labelledby="impact-title">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>Impact · A Sustainable Planet</span>
+      <h2 id="impact-title" class="reveal">Fewer cars on the road. Cleaner journeys. At scale.</h2>
+
+      <div class="impact-hero reveal" style="margin-top:2rem">
+        <div class="big">65&ndash;80%<span>Emissions cut when shared minibus trips replace car-based travel (pilot figure)</span></div>
+        <p class="lead" style="color:rgba(244,240,230,.85)">Every shared journey takes cars off the road. Our pilot showed replacing car-based travel with a full minibus cuts emissions dramatically — the core of Bussle's contribution to a sustainable planet.</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="goal">
+          <span class="g-num">5,000</span>
+          <div>
+            <h3 style="margin-bottom:.2rem">minibuses across the UK within 10 years</h3>
+            <p style="color:var(--ink-soft)">Becoming the go-to platform for community-group transport.</p>
+          </div>
+        </div>
+        <div class="metrics">
+          <span class="m"><span class="node" aria-hidden="true"></span>Minibuses unlocked</span>
+          <span class="m"><span class="node" aria-hidden="true"></span>Trips enabled</span>
+          <span class="m"><span class="node" aria-hidden="true"></span>Costs saved</span>
+          <span class="m"><span class="node" aria-hidden="true"></span>Carbon saved</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEAM ============ -->
+  <section id="team" class="section-dark" aria-labelledby="team-title">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot" aria-hidden="true"></span>The team · Bristol, UK</span>
+      <h2 id="team-title" class="reveal">Community trust, engineering depth.</h2>
+      <p class="lead reveal" style="margin-top:1rem">Three founders combining deep community roots with the technical experience to build a marketplace people rely on.</p>
+
+      <div class="team-grid reveal" style="margin-top:2.5rem">
+        <div class="member">
+          <div class="avatar" aria-hidden="true">MM</div>
+          <h3>Manu Maunganidze</h3>
+          <span class="role">Founder &amp; Project Director</span>
+          <p>Runs two youth organisations and has advised 200+ charities, schools and local authorities. Brings firsthand community experience, distribution and trust.</p>
+          <p class="awards">ESD Okayama Award 2024 · BBC 1Xtra Future Figures Award 2024</p>
+        </div>
+        <div class="member">
+          <div class="avatar" aria-hidden="true">T</div>
+          <h3>Tamika</h3>
+          <span class="role">Engineering Manager &amp; Full Stack Engineer</span>
+          <p>9+ years building critical infrastructure and customer-facing products in fintech. Product, UX and scaling technical teams — committed to social mobility and representation in tech.</p>
+        </div>
+        <div class="member">
+          <div class="avatar" aria-hidden="true">B</div>
+          <h3>Biruk</h3>
+          <span class="role">Backend &amp; Systems Engineering</span>
+          <p>Deep technical and systems capability — building the reliable foundations a trusted, three-sided marketplace runs on.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA FOOTER ============ -->
+  <section class="cta" aria-labelledby="cta-title">
+    <svg class="cta-map" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+      <g stroke="#2E7D5B" stroke-width="3" opacity="0.5" stroke-linecap="round">
+        <path d="M-40 300 H400 Q480 300 480 220 V60"/>
+        <path d="M1240 340 H760 Q680 340 680 260 V100"/>
+      </g>
+      <path d="M480 220 L680 260" stroke="#E4A11B" stroke-width="3" stroke-dasharray="2 14" opacity="0.9"/>
+      <circle cx="480" cy="220" r="10" fill="#0A2A21" stroke="#E4A11B" stroke-width="4"/>
+      <circle cx="680" cy="260" r="10" fill="#0A2A21" stroke="#E4A11B" stroke-width="4"/>
+    </svg>
+
+    <div class="wrap">
+      <h2 id="cta-title">Let's build this together.</h2>
+      <p>We're looking for funders and impact investors who want to unlock idle capacity, cut costs for communities and cut carbon at scale.</p>
+      <a class="email" href="mailto:manu@nyce.org.uk">manu@nyce.org.uk</a>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="mailto:manu@nyce.org.uk">Get in touch <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <div class="foot">
+        <span class="brand-sm">Bussle</span>
+        <span>Based in Bristol, UK</span>
+        <span>&copy; 2025 Bussle. All rights reserved.</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Tasteful scroll reveal — respects reduced-motion (elements start visible if disabled).
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var items = document.querySelectorAll('.reveal');
+    if(reduce || !('IntersectionObserver' in window)){
+      items.forEach(function(el){el.classList.add('in')});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+    items.forEach(function(el){io.observe(el)});
+  })();
+</script>
