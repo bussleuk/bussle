@@ -163,8 +163,8 @@
   .card{
     background:var(--paper);border:1px solid var(--border);
     border-radius:var(--radius);padding:1.6rem;box-shadow:var(--shadow);
-    height:100%;
   }
+  .grid .card{height:100%} /* equal-height only inside grids; standalone cards stay natural height */
   .card h3{margin-bottom:.5rem}
   .card p{color:var(--ink-soft);font-size:var(--step-0)}
   .card .figure{font-family:var(--font-display);font-weight:700;font-size:var(--step-2);color:var(--pine);letter-spacing:-.02em;font-variant-numeric:tabular-nums;display:block;margin-bottom:.3rem}
